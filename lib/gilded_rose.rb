@@ -10,16 +10,18 @@ class GildedRose
     @item = klass_for(name).new(days_remaining: days_remaining, quality: quality)
   end
 
+  def tick
+    update_attributes(item.tick)
+  end
+
+  private
+
   def klass_for(name)
     return Normal if @name.include?("Normal")
     return Brie if @name.include?("Aged Brie")
     return Sulfuras if @name.include?("Sulfuras, Hand of Ragnaros")
     return Backstage if @name.include?("Backstage")
     return Conjured if @name.include?("Conjured")
-  end
-
-  def tick
-    update_attributes(item.tick)
   end
 
   def update_attributes(item)
