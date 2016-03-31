@@ -23,14 +23,14 @@ class GildedRose
     @quality += 1 if @days_remaining <= 0 && @quality < 50
   end
 
+  def sulfuras_tick
+  end
+
   def tick
 
-    case @name
-    when "Normal"
-      return normal_tick
-    when "Aged Brie"
-      return brie_tick
-    end
+    return normal_tick if @name.include?("Normal")
+    return brie_tick if @name.include?("Aged Brie")
+    return sulfuras_tick if @name.include?("Sulfuras, Hand of Ragnaros")
 
     if @name != "Aged Brie" and @name != "Backstage passes to a TAFKAL80ETC concert"
       if @quality > 0
