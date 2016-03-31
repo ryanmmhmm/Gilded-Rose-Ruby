@@ -5,11 +5,15 @@ class Item
     @days_remaining = days_remaining
     @quality = quality
   end
+
+  def decrease_days_remaining
+    @days_remaining -= 1
+  end
 end
 
 class Normal < Item
   def tick
-    @days_remaining -= 1
+    decrease_days_remaining
     return self if @quality == 0
 
     @quality -= 1
@@ -20,7 +24,7 @@ end
 
 class Brie < Item
   def tick
-    @days_remaining -= 1
+    decrease_days_remaining
     return self if @quality == 50
 
     @quality += 1
@@ -31,7 +35,7 @@ end
 
 class Backstage < Item
   def tick
-    @days_remaining -= 1
+    decrease_days_remaining
     return self if @quality >= 50
 
     if @days_remaining < 0
@@ -54,7 +58,7 @@ end
 
 class Conjured < Item
   def tick
-    @days_remaining -= 1
+    decrease_days_remaining
     @quality -= 1 if @quality >= 1
     @quality -= 1 if @quality >= 1
 
