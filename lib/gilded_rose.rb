@@ -83,7 +83,7 @@ end
 class Conjured < Item
   def tick
     @days_remaining -= 1
-    @quality -= 2
+    @quality -= 2 if @quality >= 2
     return self
   end
 end
