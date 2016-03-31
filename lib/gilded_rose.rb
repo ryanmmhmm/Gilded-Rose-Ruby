@@ -1,42 +1,27 @@
 class GildedRose
-  attr_reader :name, :days_remaining, :quality
+  attr_reader :name, :days_remaining, :quality, :item
 
   def initialize(name:, days_remaining:, quality:)
     @name = name
     @days_remaining = days_remaining
     @quality = quality
+    @item = klass_for(name).new(days_remaining: days_remaining, quality: quality)
+  end
+
+  def klass_for(name)
+    return Normal if @name.include?("Normal")
+    return Brie if @name.include?("Aged Brie")
+    return Sulfuras if @name.include?("Sulfuras, Hand of Ragnaros")
+    return Backstage if @name.include?("Backstage")
+  end
+
+  def tick
+    update_attributes(item.tick)
   end
 
   def update_attributes(item)
     @days_remaining = item.days_remaining
     @quality = item.quality
-  end
-
-  def normal_tick
-    item = Normal.new(days_remaining: @days_remaining, quality: @quality)
-    update_attributes(item.tick)
-  end
-
-  def brie_tick
-    item = Brie.new(days_remaining: @days_remaining, quality: @quality)
-    update_attributes(item.tick)
-  end
-
-  def sulfuras_tick
-    item = Sulfuras.new(days_remaining: @days_remaining, quality: @quality)
-    update_attributes(item.tick)
-  end
-
-  def backstage_tick
-    item = Backstage.new(days_remaining: @days_remaining, quality: @quality)
-    update_attributes(item.tick)
-  end
-
-  def tick
-    return normal_tick if @name.include?("Normal")
-    return brie_tick if @name.include?("Aged Brie")
-    return sulfuras_tick if @name.include?("Sulfuras, Hand of Ragnaros")
-    return backstage_tick if @name.include?("Backstage")
   end
 end
 
