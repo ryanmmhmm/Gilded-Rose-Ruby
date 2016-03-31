@@ -7,12 +7,14 @@ class GildedRose
     @quality = quality
   end
 
-  def normal_tick
-    @days_remaining -= 1
-    return if @quality == 0
+  def update_attributes(item)
+    @days_remaining = item.days_remaining
+    @quality = item.quality
+  end
 
-    @quality -= 1
-    @quality -= 1 if @days_remaining <= 0
+  def normal_tick
+    item = Normal.new(days_remaining: @days_remaining, quality: @quality)
+    update_attributes(item.tick)
   end
 
   def brie_tick
@@ -41,5 +43,23 @@ class GildedRose
     return brie_tick if @name.include?("Aged Brie")
     return sulfuras_tick if @name.include?("Sulfuras, Hand of Ragnaros")
     return backstage_tick if @name.include?("Backstage")
+  end
+end
+
+class Normal
+  attr_reader :days_remaining, :quality
+
+  def initialize(days_remaining:, quality:)
+    @days_remaining = days_remaining
+    @quality = quality
+  end
+
+  def tick
+    @days_remaining -= 1
+    return self if @quality == 0
+
+    @quality -= 1
+    @quality -= 1 if @days_remaining <= 0
+    return self
   end
 end
