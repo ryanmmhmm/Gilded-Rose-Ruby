@@ -1,6 +1,7 @@
 class Item
   attr_reader :days_remaining, :quality
   MAX_QUALITY = 50
+  MIN_QUALITY = 0
 
   def initialize(days_remaining:, quality:)
     @days_remaining = days_remaining
@@ -19,7 +20,7 @@ end
 class Normal < Item
   def tick
     decrease_days_remaining
-    return self if @quality == 0
+    return self if @quality == MIN_QUALITY
 
     decrease_quality
     decrease_quality if @days_remaining <= 0
@@ -64,12 +65,12 @@ end
 class Conjured < Item
   def tick
     decrease_days_remaining
-    decrease_quality if @quality >= 1
-    decrease_quality if @quality >= 1
+    decrease_quality if @quality > MIN_QUALITY
+    decrease_quality if @quality > MIN_QUALITY
 
     if @days_remaining <= 0
-      decrease_quality if @quality >= 1
-      decrease_quality if @quality >= 1
+      decrease_quality if @quality > MIN_QUALITY
+      decrease_quality if @quality > MIN_QUALITY
     end
     return self
   end
