@@ -18,11 +18,8 @@ class GildedRose
   end
 
   def brie_tick
-    @days_remaining -= 1
-    return if @quality == 50
-
-    @quality += 1
-    @quality += 1 if @days_remaining <= 0 && @quality < 50
+    item = Brie.new(days_remaining: @days_remaining, quality: @quality)
+    update_attributes(item.tick)
   end
 
   def sulfuras_tick
@@ -60,6 +57,24 @@ class Normal
 
     @quality -= 1
     @quality -= 1 if @days_remaining <= 0
+    return self
+  end
+end
+
+class Brie
+  attr_reader :days_remaining, :quality
+
+  def initialize(days_remaining:, quality:)
+    @days_remaining = days_remaining
+    @quality = quality
+  end
+
+  def tick
+    @days_remaining -= 1
+    return self if @quality == 50
+
+    @quality += 1
+    @quality += 1 if @days_remaining <= 0 && @quality < 50
     return self
   end
 end
