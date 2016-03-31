@@ -1,5 +1,6 @@
 class Item
   attr_reader :days_remaining, :quality
+  MAX_QUALITY = 50
 
   def initialize(days_remaining:, quality:)
     @days_remaining = days_remaining
@@ -29,10 +30,10 @@ end
 class Brie < Item
   def tick
     decrease_days_remaining
-    return self if @quality == 50
+    return self if @quality == MAX_QUALITY
 
     @quality += 1
-    @quality += 1 if @days_remaining <= 0 && @quality < 50
+    @quality += 1 if @days_remaining <= 0 && @quality < MAX_QUALITY
     return self
   end
 end
@@ -40,7 +41,7 @@ end
 class Backstage < Item
   def tick
     decrease_days_remaining
-    return self if @quality >= 50
+    return self if @quality >= MAX_QUALITY
 
     if @days_remaining < 0
       @quality = 0
