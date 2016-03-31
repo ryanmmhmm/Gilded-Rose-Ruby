@@ -8,22 +8,20 @@ class GildedRose
   end
 
   def normal_tick
-    if @quality != 0
-      if @days_remaining > 0
-        @quality -= 1
-      end
-      if @days_remaining <= 0
-        @quality -= 2
-      end
-    end
-
     @days_remaining -= 1
+    return if @quality == 0
+
+    @quality -= 1
+    @quality -= 1 if @days_remaining <= 0
   end
 
   def tick
 
-    if @name.include?("Normal")
+    case @name
+    when "Normal"
       return normal_tick
+    when "Aged Brie"
+      return brie_tick
     end
 
     if @name != "Aged Brie" and @name != "Backstage passes to a TAFKAL80ETC concert"
