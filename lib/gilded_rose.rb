@@ -23,6 +23,8 @@ class GildedRose
   end
 
   def sulfuras_tick
+    item = Sulfuras.new(days_remaining: @days_remaining, quality: @quality)
+    update_attributes(item.tick)
   end
 
   def backstage_tick
@@ -82,6 +84,12 @@ class Backstage < Item
     @quality += 1
     @quality += 1 if @days_remaining < 10
     @quality += 1 if @days_remaining < 5
+    return self
+  end
+end
+
+class Sulfuras < Item
+  def tick
     return self
   end
 end
