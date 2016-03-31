@@ -26,13 +26,8 @@ class GildedRose
   end
 
   def backstage_tick
-    @days_remaining -= 1
-    return if @quality >= 50
-    return @quality = 0 if @days_remaining < 0
-
-    @quality += 1
-    @quality += 1 if @days_remaining < 10
-    @quality += 1 if @days_remaining < 5
+    item = Backstage.new(days_remaining: @days_remaining, quality: @quality)
+    update_attributes(item.tick)
   end
 
   def tick
@@ -75,6 +70,30 @@ class Brie
 
     @quality += 1
     @quality += 1 if @days_remaining <= 0 && @quality < 50
+    return self
+  end
+end
+
+class Backstage
+  attr_reader :days_remaining, :quality
+
+  def initialize(days_remaining:, quality:)
+    @days_remaining = days_remaining
+    @quality = quality
+  end
+
+  def tick
+    @days_remaining -= 1
+    return self if @quality >= 50
+
+    if @days_remaining < 0
+      @quality = 0
+      return self
+    end
+
+    @quality += 1
+    @quality += 1 if @days_remaining < 10
+    @quality += 1 if @days_remaining < 5
     return self
   end
 end
