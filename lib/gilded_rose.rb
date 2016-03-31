@@ -13,6 +13,7 @@ class GildedRose
     return Brie if @name.include?("Aged Brie")
     return Sulfuras if @name.include?("Sulfuras, Hand of Ragnaros")
     return Backstage if @name.include?("Backstage")
+    return Conjured if @name.include?("Conjured")
   end
 
   def tick
@@ -75,6 +76,14 @@ end
 
 class Sulfuras < Item
   def tick
+    return self
+  end
+end
+
+class Conjured < Item
+  def tick
+    @days_remaining -= 1
+    @quality -= 2
     return self
   end
 end
