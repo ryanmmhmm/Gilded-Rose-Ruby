@@ -15,6 +15,10 @@ class Item
   def decrease_quality
     @quality -= 1
   end
+
+  def increase_quality
+    @quality += 1
+  end
 end
 
 class Normal < Item
@@ -33,8 +37,8 @@ class Brie < Item
     decrease_days_remaining
     return self if @quality == MAX_QUALITY
 
-    @quality += 1
-    @quality += 1 if @days_remaining <= 0 && @quality < MAX_QUALITY
+    increase_quality
+    increase_quality if @days_remaining <= 0 && @quality < MAX_QUALITY
     return self
   end
 end
@@ -49,9 +53,9 @@ class Backstage < Item
       return self
     end
 
-    @quality += 1
-    @quality += 1 if @days_remaining < 10
-    @quality += 1 if @days_remaining < 5
+    increase_quality
+    increase_quality if @days_remaining < 10
+    increase_quality if @days_remaining < 5
     return self
   end
 end
