@@ -17,11 +17,18 @@ class GildedRose
   private
 
   def klass_for(name)
-    return Normal if @name.include?("Normal")
-    return Brie if @name.include?("Aged Brie")
-    return Sulfuras if @name.include?("Sulfuras, Hand of Ragnaros")
-    return Backstage if @name.include?("Backstage")
-    return Conjured if @name.include?("Conjured")
+    case name
+    when /Normal/
+      return Normal
+    when /Brie/
+      return Brie
+    when /Sulfuras/
+      return Sulfuras
+    when /Backstage/
+      return Backstage
+    when /Conjured/
+      return Conjured
+    end
   end
 
   def update_attributes(item)
